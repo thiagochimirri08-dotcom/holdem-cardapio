@@ -9,7 +9,6 @@
   :root {
     --green: #1D9E75;
     --green-dark: #157a5a;
-    --green-light: #e8f7f2;
     --bg: #0f0f0f;
     --surface: #1a1a1a;
     --surface2: #242424;
@@ -18,249 +17,37 @@
     --text-muted: #888;
     --radius: 12px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* HEADER */
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 16px 16px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  header h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
-    letter-spacing: 3px;
-    color: var(--green);
-    line-height: 1;
-  }
-
-  header p {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 4px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  /* CATEGORIAS */
-  .cats-wrap {
-    overflow-x: auto;
-    padding: 14px 16px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    scrollbar-width: none;
-  }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 16px 16px; text-align: center; position: sticky; top: 0; z-index: 100; }
+  header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px; color: var(--green); line-height: 1; }
+  header p { font-size: 12px; color: var(--text-muted); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
+  .cats-wrap { overflow-x: auto; padding: 14px 16px; background: var(--surface); border-bottom: 1px solid var(--border); scrollbar-width: none; }
   .cats-wrap::-webkit-scrollbar { display: none; }
-
-  .cats {
-    display: flex;
-    gap: 8px;
-    width: max-content;
-  }
-
-  .cat-btn {
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    font-size: 13px;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    background: var(--surface2);
-    color: var(--text-muted);
-    white-space: nowrap;
-    transition: all 0.15s;
-  }
-
-  .cat-btn.active {
-    background: var(--green);
-    color: #fff;
-    border-color: var(--green);
-  }
-
-  /* GRID DE ITENS */
-  .items {
-    padding: 16px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
-    padding-bottom: 100px;
-  }
-
-  .item-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: border-color 0.15s;
-  }
-
+  .cats { display: flex; gap: 8px; width: max-content; }
+  .cat-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--surface2); color: var(--text-muted); white-space: nowrap; transition: all 0.15s; }
+  .cat-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+  .items { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding-bottom: 100px; }
+  .item-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.15s; }
   .item-card:hover { border-color: var(--green); }
-
-  .item-img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    font-size: 28px;
-  }
-
-  .item-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .item-body {
-    padding: 10px 12px 12px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .item-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 4px;
-    line-height: 1.3;
-  }
-
-  .item-desc {
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.5;
-    flex: 1;
-    margin-bottom: 10px;
-  }
-
-  .item-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .item-price {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--green);
-  }
-
-  .qty-control {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .qty-btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    cursor: pointer;
-    color: var(--green);
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    transition: background 0.1s;
-  }
-
+  .emoji-placeholder { font-size: 36px; width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: var(--surface2); }
+  .item-img { width: 100%; aspect-ratio: 4/3; overflow: hidden; }
+  .item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .item-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; }
+  .item-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+  .item-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 10px; }
+  .item-footer { display: flex; align-items: center; justify-content: space-between; }
+  .item-price { font-size: 15px; font-weight: 600; color: var(--green); }
+  .qty-control { display: flex; align-items: center; gap: 6px; }
+  .qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; color: var(--green); font-size: 16px; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.1s; }
   .qty-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
-
-  .qty-num {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    min-width: 14px;
-    text-align: center;
-  }
-
-  /* CARRINHO */
-  .cart-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border-top: 1px solid var(--border);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 200;
-  }
-
+  .qty-num { font-size: 13px; font-weight: 600; color: var(--text); min-width: 14px; text-align: center; }
+  .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 200; }
   .cart-info { font-size: 13px; color: var(--text-muted); }
   .cart-total { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 2px; }
-
-  .cart-btn {
-    background: var(--green);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    transition: background 0.15s;
-  }
-
+  .cart-btn { background: var(--green); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; }
   .cart-btn:hover { background: var(--green-dark); }
   .cart-btn:disabled { background: var(--surface2); color: var(--text-muted); cursor: default; }
-
-  /* LOADING */
-  .loading {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-    gap: 12px;
-  }
-
-  .spinner {
-    width: 32px; height: 32px;
-    border: 3px solid var(--border);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* EMOJI fallback */
-  .emoji-placeholder {
-    font-size: 36px;
-    width: 100%;
-    aspect-ratio: 4/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--surface2);
-  }
 </style>
 </head>
 <body>
@@ -274,12 +61,7 @@
   <div class="cats" id="cats"></div>
 </div>
 
-<div class="items" id="items">
-  <div class="loading" style="grid-column:1/-1">
-    <div class="spinner"></div>
-    <span>Carregando cardápio...</span>
-  </div>
-</div>
+<div class="items" id="items"></div>
 
 <div class="cart-bar">
   <div>
@@ -290,81 +72,107 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-// CONFIGURAÇÃO — altere apenas aqui
-// ═══════════════════════════════════════════
-const SHEET_ID = '1ShyaT7ax2kFtCkf42IKckwzrvve5Jsm9SJWL_g2x2MI';
 const WHATSAPP = '5516994605273';
 
-// Emojis fallback por categoria (quando não há foto)
 const EMOJI_CAT = {
-  'Hambúrgueres': '🍔',
-  'Lanches': '🥪',
-  'Porções': '🍟',
-  'Drinks': '🍹',
-  'Cervejas': '🍺',
-  'Bebidas': '🥤',
-  'Destilados': '🥃',
-  'Sobremesas': '🍮',
+  'Hambúrgueres':'🍔','Lanches':'🥪','Porções':'🍟',
+  'Drinks':'🍹','Cervejas':'🍺','Bebidas':'🥤',
+  'Destilados':'🥃','Sobremesas':'🍮'
 };
 
 // ═══════════════════════════════════════════
+// CARDÁPIO — edite aqui ao atualizar preços
+// ═══════════════════════════════════════════
+const MENU = {
+  "Hambúrgueres": [
+    {name:"San Siro",price:43.90,desc:"Brioche, 180g, queijo, cebola empanada, bacon, geleia BBQ, sour cream",foto:""},
+    {name:"Maracanã",price:38.90,desc:"Brioche, 180g, queijo, maionese da casa, alface, tomate, bacon",foto:""},
+    {name:"Morumbi",price:37.90,desc:"Brioche, 180g, queijo, picles, cebola picada, mostarda, ketchup",foto:""},
+    {name:"Camp Nou",price:41.90,desc:"Brioche, 180g, queijo, cebola caramelizada, catupiry, bacon",foto:""},
+    {name:"Bernabeu",price:39.90,desc:"Brioche, 180g, queijo, alho frito, catupiry, bacon",foto:""},
+    {name:"Azteca",price:39.90,desc:"Brioche, 180g, duplo cheddar, bacon, maionese",foto:""},
+    {name:"Monumental",price:43.90,desc:"Brioche, 180g, queijo empanado, geleia de pimenta, tomate sweet grape, sour cream",foto:""},
+    {name:"El Madrigal",price:42.90,desc:"Brioche, 180g, abacaxi empanado, muçarela, mini vinagrete, maionese, sour cream",foto:""},
+  ],
+  "Lanches": [
+    {name:"Premier",price:43.90,desc:"Brioche, iscas de tilápia, molho tártaro, coleslaw",foto:""},
+    {name:"Romano",price:36.90,desc:"Ciabatta, salame, muçarela, alface, cebola roxa, tomate, sour cream",foto:""},
+    {name:"Centenário",price:48.90,desc:"Francês, picanha em tiras, muçarela, tomate, cebola, maionese de alho",foto:""},
+    {name:"Beira-Rio",price:49.90,desc:"Brioche, filé mignon, catupiry, maionese branca, tomate sweet grape",foto:""},
+    {name:"Pacaembu",price:37.90,desc:"Francês, hambúrguer de linguiça, muçarela, cebola, maionese de alho",foto:""},
+    {name:"Mineirão",price:39.90,desc:"Brioche, filé de frango empanado, maionese branca, alface",foto:""},
+    {name:"Noroeste",price:47.90,desc:"Francês, contra-filé, muçarela, alface, tomate, cebola, maionese da casa",foto:""},
+    {name:"São Carlense",price:54.90,desc:"Francês, filé mignon, muçarela, tomate, maionese da casa",foto:""},
+    {name:"Ferroviária",price:54.90,desc:"Francês, picanha ao alho frito, muçarela, tomate, maionese da casa",foto:""},
+  ],
+  "Porções": [
+    {name:"Tábua de Frios",price:54.90,desc:"Muçarela, parmesão, salame, coppa, picles, azeitona",foto:""},
+    {name:"Batata Flax Flu (inteira)",price:34.90,desc:"Batata palito com páprica picante",foto:""},
+    {name:"Batata Flax Flu (meia)",price:23.90,desc:"Batata palito com páprica picante",foto:""},
+    {name:"Batata Palestra (inteira)",price:39.90,desc:"Batata palito, cheddar e bacon",foto:""},
+    {name:"La Bombonera (inteira)",price:48.90,desc:"Batata, cheddar, bacon, ovos com gema mole",foto:""},
+    {name:"Olympic Rings (inteiro)",price:39.90,desc:"Anéis de cebola empanados artesanais",foto:""},
+    {name:"Libertadores (inteira)",price:45.90,desc:"Mandioca frita com pulled pork e sour cream",foto:""},
+    {name:"Oliver Kahn (inteira)",price:49.90,desc:"Iscas de frango panko com molho tártaro",foto:""},
+    {name:"Champions League (inteiro)",price:129.90,desc:"Costelinha defumada ao BBQ com fritas",foto:""},
+    {name:"Mundial (inteira)",price:99.90,desc:"Filé mignon com catupiry, batata frita",foto:""},
+    {name:"Brasileirão (inteira)",price:93.90,desc:"Picanhas na chapa, torradas, mandioca e molho",foto:""},
+    {name:"Sticks de Queijo",price:29.90,desc:"Palitinhos de muçarela empanados, geleia de pimenta",foto:""},
+    {name:"Dadinhos de Tapioca",price:29.90,desc:"Artesanais com goiabada e geleia de pimenta",foto:""},
+  ],
+  "Drinks": [
+    {name:"Rio de Janeiro",price:24.90,desc:"Caipirinha clássica — cachaça, vodka ou saquê",foto:""},
+    {name:"Barcelona",price:29.90,desc:"Vinho tinto, suco de abacaxi, leite condensado",foto:""},
+    {name:"Atenas (Piña Colada)",price:28.90,desc:"Rum, abacaxi, leite condensado, leite de coco",foto:""},
+    {name:"Havana (Mojito)",price:27.90,desc:"Rum, suco de limão, água com gás, xarope",foto:""},
+    {name:"Pequim (Negroni)",price:28.90,desc:"Campari, gin e vermute doce",foto:""},
+    {name:"Atlanta (Long Island)",price:29.90,desc:"Gin, tequila, rum, vodka, limão, coca-cola",foto:""},
+    {name:"Berlim (Old Fashioned)",price:29.90,desc:"Bourbon, xarope de açúcar, angostura",foto:""},
+    {name:"Moscou (Moscow Mule)",price:32.90,desc:"Vodka importada, gengibre, gás, limão",foto:""},
+    {name:"Tóquio (Gin Tônica)",price:29.90,desc:"Gin, limão, xarope, pimenta rosa, alecrim",foto:""},
+    {name:"Paris (Fitzgerald)",price:32.90,desc:"Gin, xarope, limão, angostura",foto:""},
+    {name:"Veneza (Aperol Citrus)",price:29.90,desc:"Aperol, Licor 43, laranja e limão",foto:""},
+    {name:"Tijuana (Margarita)",price:29.90,desc:"Licor de frutas, tequila, suco de limão e sal",foto:""},
+  ],
+  "Cervejas": [
+    {name:"Litrão",price:15.90,desc:"Amstel, Brahma, Skol ou Antarctica",foto:""},
+    {name:"Original 600ml",price:18.00,desc:"",foto:""},
+    {name:"Heineken 600ml",price:20.00,desc:"",foto:""},
+    {name:"Long Neck Heineken",price:12.00,desc:"Heineken ou Heineken 0.0",foto:""},
+    {name:"Long Neck Nacional",price:10.00,desc:"Amstel Ultra",foto:""},
+  ],
+  "Bebidas": [
+    {name:"Refrigerante",price:7.00,desc:"Coca, Guaraná, Fanta, Sprite, Itubaina",foto:""},
+    {name:"Água sem gás",price:4.00,desc:"",foto:""},
+    {name:"Água com gás",price:5.00,desc:"",foto:""},
+    {name:"Energético Red Bull",price:13.00,desc:"",foto:""},
+    {name:"H2OH",price:9.50,desc:"Consultar sabores",foto:""},
+    {name:"Soda Italiana",price:16.90,desc:"Consultar sabores",foto:""},
+    {name:"Suco",price:9.50,desc:"Consultar sabores",foto:""},
+  ],
+  "Destilados": [
+    {name:"Vodka Smirnoff",price:14.90,desc:"Nacional",foto:""},
+    {name:"Vodka Absolut",price:21.90,desc:"Importada",foto:""},
+    {name:"Whisky Red Label",price:21.90,desc:"",foto:""},
+    {name:"Whisky Black Label",price:25.90,desc:"",foto:""},
+    {name:"Whisky Jack Daniels",price:29.90,desc:"",foto:""},
+    {name:"Cachaça 51",price:6.90,desc:"",foto:""},
+    {name:"Cachaça Salinas",price:10.90,desc:"",foto:""},
+    {name:"Campari",price:14.90,desc:"",foto:""},
+    {name:"Tequila",price:21.90,desc:"",foto:""},
+    {name:"Licor 43",price:26.90,desc:"",foto:""},
+  ],
+  "Sobremesas": [
+    {name:"Petit Gateau Chocolate",price:24.90,desc:"",foto:""},
+    {name:"Taça de Sorvete com Cobertura",price:14.90,desc:"",foto:""},
+  ]
+};
 
-let menu = {};
-let activecat = '';
+let activecat = Object.keys(MENU)[0];
 let cart = {};
 
-async function loadMenu() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=Sheet1`;
-  try {
-    const res = await fetch(url);
-    const csv = await res.text();
-    const rows = parseCSV(csv);
-    // Pula header
-    for (let i = 1; i < rows.length; i++) {
-      const [cat, nome, preco, desc, foto] = rows[i];
-      if (!cat || !nome) continue;
-      if (!menu[cat]) menu[cat] = [];
-      menu[cat].push({
-        name: nome.trim(),
-        price: parseFloat(preco) || 0,
-        desc: desc ? desc.trim() : '',
-        foto: foto ? foto.trim() : ''
-      });
-    }
-    activecat = Object.keys(menu)[0];
-    renderCats();
-    renderItems();
-  } catch(e) {
-    document.getElementById('items').innerHTML = `<div class="loading" style="grid-column:1/-1">Erro ao carregar cardápio. Tente recarregar a página.</div>`;
-  }
-}
-
-function parseCSV(text) {
-  const rows = [];
-  let row = [], field = '', inQ = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (c === '"') {
-      if (inQ && text[i+1] === '"') { field += '"'; i++; }
-      else inQ = !inQ;
-    } else if (c === ',' && !inQ) {
-      row.push(field); field = '';
-    } else if ((c === '\n' || c === '\r') && !inQ) {
-      row.push(field); field = '';
-      if (row.some(f => f)) rows.push(row);
-      row = [];
-      if (c === '\r' && text[i+1] === '\n') i++;
-    } else {
-      field += c;
-    }
-  }
-  if (field || row.length) { row.push(field); if (row.some(f=>f)) rows.push(row); }
-  return rows;
-}
-
 function renderCats() {
-  document.getElementById('cats').innerHTML = Object.keys(menu).map(c =>
+  document.getElementById('cats').innerHTML = Object.keys(MENU).map(c =>
     `<button class="cat-btn${c===activecat?' active':''}" onclick="selectCat('${c}')">${c}</button>`
   ).join('');
 }
@@ -372,23 +180,23 @@ function renderCats() {
 function selectCat(c) { activecat = c; renderCats(); renderItems(); }
 
 function renderItems() {
-  const items = menu[activecat] || [];
+  const items = MENU[activecat] || [];
+  const emoji = EMOJI_CAT[activecat] || '🍽️';
   document.getElementById('items').innerHTML = items.map((item, i) => {
-    const key = activecat + '|' + i;
+    const key = activecat+'|'+i;
     const qty = cart[key]?.qty || 0;
-    const emoji = EMOJI_CAT[activecat] || '🍽️';
     const imgHtml = item.foto
-      ? `<div class="item-img"><img src="${item.foto}" alt="${item.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'emoji-placeholder\\'>${emoji}</div>'"></div>`
+      ? `<div class="item-img"><img src="${item.foto}" alt="${item.name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=\\'emoji-placeholder\\'>${emoji}</div>'"></div>`
       : `<div class="emoji-placeholder">${emoji}</div>`;
     return `<div class="item-card">
       ${imgHtml}
       <div class="item-body">
         <div class="item-name">${item.name}</div>
-        ${item.desc ? `<div class="item-desc">${item.desc}</div>` : '<div class="item-desc"></div>'}
+        ${item.desc?`<div class="item-desc">${item.desc}</div>`:'<div class="item-desc"></div>'}
         <div class="item-footer">
           <div class="item-price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
           <div class="qty-control">
-            ${qty > 0 ? `<button class="qty-btn" onclick="changeQty('${activecat}',${i},-1)">−</button><span class="qty-num">${qty}</span>` : ''}
+            ${qty>0?`<button class="qty-btn" onclick="changeQty('${activecat}',${i},-1)">−</button><span class="qty-num">${qty}</span>`:''}
             <button class="qty-btn" onclick="changeQty('${activecat}',${i},1)">+</button>
           </div>
         </div>
@@ -398,33 +206,32 @@ function renderItems() {
 }
 
 function changeQty(cat, i, delta) {
-  const key = cat + '|' + i;
-  const item = menu[cat][i];
-  if (!cart[key]) cart[key] = { name: item.name, price: item.price, qty: 0 };
+  const key = cat+'|'+i;
+  const item = MENU[cat][i];
+  if (!cart[key]) cart[key] = {name:item.name,price:item.price,qty:0};
   cart[key].qty = Math.max(0, cart[key].qty + delta);
-  updateCart();
-  renderItems();
+  updateCart(); renderItems();
 }
 
 function updateCart() {
-  const items = Object.values(cart).filter(i => i.qty > 0);
-  const total = items.reduce((s, i) => s + i.price * i.qty, 0);
-  const count = items.reduce((s, i) => s + i.qty, 0);
-  document.getElementById('cart-info').textContent = count === 0 ? 'Nenhum item selecionado' : `${count} item${count>1?'s':''} no pedido`;
-  document.getElementById('cart-total').textContent = count === 0 ? '' : `Total: R$ ${total.toFixed(2).replace('.',',')}`;
-  document.getElementById('cart-btn').disabled = count === 0;
+  const items = Object.values(cart).filter(i=>i.qty>0);
+  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
+  const count = items.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-info').textContent = count===0?'Nenhum item selecionado':`${count} item${count>1?'s':''} no pedido`;
+  document.getElementById('cart-total').textContent = count===0?'':`Total: R$ ${total.toFixed(2).replace('.',',')}`;
+  document.getElementById('cart-btn').disabled = count===0;
 }
 
 function finalizarPedido() {
-  const items = Object.values(cart).filter(i => i.qty > 0);
-  const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+  const items = Object.values(cart).filter(i=>i.qty>0);
+  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
   let msg = 'Olá! Gostaria de fazer um pedido:%0A%0A';
-  items.forEach(i => { msg += `• ${i.qty}x ${i.name} — R$ ${(i.price*i.qty).toFixed(2).replace('.',',')}%0A`; });
-  msg += `%0ATotal: R$ ${total.toFixed(2).replace('.',',')}`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank');
+  items.forEach(i=>{msg+=`• ${i.qty}x ${i.name} — R$ ${(i.price*i.qty).toFixed(2).replace('.',',')}%0A`;});
+  msg+=`%0ATotal: R$ ${total.toFixed(2).replace('.',',')}`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,'_blank');
 }
 
-loadMenu();
+renderCats(); renderItems();
 </script>
 </body>
 </html>
