@@ -4,57 +4,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hold'em Sports Bar — Cardápio</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green: #1D9E75;
-    --green-dark: #157a5a;
-    --bg: #0f0f0f;
-    --surface: #1a1a1a;
-    --surface2: #242424;
-    --border: #2e2e2e;
-    --text: #f0f0f0;
-    --text-muted: #888;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 20px 16px 16px; text-align: center; position: sticky; top: 0; z-index: 100; }
-  header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px; color: var(--green); line-height: 1; }
-  header p { font-size: 12px; color: var(--text-muted); margin-top: 4px; letter-spacing: 1px; text-transform: uppercase; }
-  .cats-wrap { overflow-x: auto; padding: 14px 16px; background: var(--surface); border-bottom: 1px solid var(--border); scrollbar-width: none; }
-  .cats-wrap::-webkit-scrollbar { display: none; }
-  .cats { display: flex; gap: 8px; width: max-content; }
-  .cat-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--surface2); color: var(--text-muted); white-space: nowrap; transition: all 0.15s; }
-  .cat-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
-  .items { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding-bottom: 100px; }
-  .item-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.15s; }
-  .item-card:hover { border-color: var(--green); }
-  .emoji-placeholder { font-size: 36px; width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: var(--surface2); }
-  .item-img { width: 100%; aspect-ratio: 4/3; overflow: hidden; }
-  .item-img img { width: 100%; height: 100%; object-fit: cover; }
-  .item-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; }
-  .item-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
-  .item-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 10px; }
-  .item-footer { display: flex; align-items: center; justify-content: space-between; }
-  .item-price { font-size: 15px; font-weight: 600; color: var(--green); }
-  .qty-control { display: flex; align-items: center; gap: 6px; }
-  .qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; color: var(--green); font-size: 16px; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.1s; }
-  .qty-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
-  .qty-num { font-size: 13px; font-weight: 600; color: var(--text); min-width: 14px; text-align: center; }
-  .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 200; }
-  .cart-info { font-size: 13px; color: var(--text-muted); }
-  .cart-total { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 2px; }
-  .cart-btn { background: var(--green); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; }
-  .cart-btn:hover { background: var(--green-dark); }
-  .cart-btn:disabled { background: var(--surface2); color: var(--text-muted); cursor: default; }
+:root {
+  --green: #1D9E75;
+  --green-dark: #157a5a;
+  --green-light: rgba(29,158,117,0.12);
+  --bg: #0f0f0f;
+  --surface: #1a1a1a;
+  --surface2: #242424;
+  --border: #2e2e2e;
+  --text: #f0f0f0;
+  --text-muted: #888;
+  --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px 10px; text-align: center; position: sticky; top: 0; z-index: 100; }
+header .logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+header .logo-script { font-family: 'Dancing Script', cursive; font-weight: 700; font-size: 38px; color: #fff; line-height: 1; letter-spacing: 1px; }
+header .logo-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 5px; text-transform: uppercase; margin-top: 2px; }
+
+.cats-wrap { overflow-x: auto; padding: 14px 16px; background: var(--surface); border-bottom: 1px solid var(--border); scrollbar-width: none; }
+.cats-wrap::-webkit-scrollbar { display: none; }
+.cats { display: flex; gap: 8px; width: max-content; }
+.cat-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--surface2); color: var(--text-muted); white-space: nowrap; transition: all 0.15s; }
+.cat-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+.items { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding-bottom: 110px; }
+
+.item-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.15s; }
+.item-card:hover { border-color: var(--green); }
+.item-card.has-combo-open { border-color: var(--green); }
+
+.emoji-placeholder { font-size: 36px; width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: var(--surface2); }
+.item-img { width: 100%; aspect-ratio: 4/3; overflow: hidden; }
+.item-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.item-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; }
+.item-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+.item-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 10px; }
+.item-footer { display: flex; align-items: center; justify-content: space-between; }
+.item-price { font-size: 15px; font-weight: 600; color: var(--green); }
+
+.qty-control { display: flex; align-items: center; gap: 6px; }
+.qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; color: var(--green); font-size: 16px; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.1s; }
+.qty-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
+.qty-num { font-size: 13px; font-weight: 600; color: var(--text); min-width: 14px; text-align: center; }
+
+/* COMBO SECTION */
+.combo-section { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+.combo-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.combo-toggle input[type="checkbox"] { display: none; }
+.combo-check-box {
+  width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--border);
+  background: var(--surface2); flex-shrink: 0; display: flex; align-items: center;
+  justify-content: center; transition: all 0.15s;
+}
+.combo-check-box svg { display: none; }
+.combo-toggle input:checked ~ .combo-check-box {
+  background: var(--green); border-color: var(--green);
+}
+.combo-toggle input:checked ~ .combo-check-box svg { display: block; }
+.combo-label { font-size: 12px; color: var(--text-muted); line-height: 1.3; flex: 1; }
+.combo-label strong { color: var(--green); font-size: 12px; }
+.combo-label span { display: block; font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+.combo-drink-select {
+  margin-top: 8px;
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  padding: 7px 10px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231D9E75' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+.combo-drink-select:focus { border-color: var(--green-dark); }
+
+/* CART BAR */
+.cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 200; }
+.cart-info { font-size: 13px; color: var(--text-muted); }
+.cart-total { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 2px; }
+.cart-btn { background: var(--green); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; white-space: nowrap; }
+.cart-btn:hover { background: var(--green-dark); }
+.cart-btn:disabled { background: var(--surface2); color: var(--text-muted); cursor: default; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Hold'em Sports Bar</h1>
-  <p>Cardápio · Peça pelo WhatsApp</p>
+  <div class="logo-wrap">
+    <div class="logo-script">Hold'em</div>
+    <div class="logo-sub">Sports Bar · Cardápio</div>
+  </div>
 </header>
 
 <div class="cats-wrap">
@@ -74,15 +126,25 @@
 <script>
 const WHATSAPP = '5516994605273';
 
+const COMBO_PRICE = 10.90;
+const COMBO_CATS = ['Hambúrgueres', 'Lanches'];
+const COMBO_DRINKS = [
+  'Refrigerante',
+  'Água sem gás',
+  'Água com gás',
+  'H2OH',
+  'Schweppes',
+  'Suco',
+  'Soda Italiana',
+  'Energético Red Bull',
+];
+
 const EMOJI_CAT = {
   'Hambúrgueres':'🍔','Lanches':'🥪','Porções':'🍟',
   'Drinks':'🍹','Cervejas':'🍺','Bebidas':'🥤',
   'Destilados':'🥃','Sobremesas':'🍮'
 };
 
-// ═══════════════════════════════════════════
-// CARDÁPIO — edite aqui ao atualizar preços
-// ═══════════════════════════════════════════
 const MENU = {
   "Hambúrgueres": [
     {name:"San Siro",price:43.90,desc:"Brioche, 180g, queijo, cebola empanada, bacon, geleia BBQ, sour cream",foto:""},
@@ -119,6 +181,8 @@ const MENU = {
     {name:"Brasileirão (inteira)",price:93.90,desc:"Picanhas na chapa, torradas, mandioca e molho",foto:""},
     {name:"Sticks de Queijo",price:29.90,desc:"Palitinhos de muçarela empanados, geleia de pimenta",foto:""},
     {name:"Dadinhos de Tapioca",price:29.90,desc:"Artesanais com goiabada e geleia de pimenta",foto:""},
+    {name:"Chips",price:15.90,desc:"Crocantes chips de batata doce",foto:""},
+    {name:"Amendoim",price:9.90,desc:"Consulte sabores disponíveis",foto:""},
   ],
   "Drinks": [
     {name:"Rio de Janeiro",price:24.90,desc:"Caipirinha clássica — cachaça, vodka ou saquê",foto:""},
@@ -126,6 +190,8 @@ const MENU = {
     {name:"Atenas (Piña Colada)",price:28.90,desc:"Rum, abacaxi, leite condensado, leite de coco",foto:""},
     {name:"Havana (Mojito)",price:27.90,desc:"Rum, suco de limão, água com gás, xarope",foto:""},
     {name:"Pequim (Negroni)",price:28.90,desc:"Campari, gin e vermute doce",foto:""},
+    {name:"Los Angeles (Campari Tônica)",price:27.90,desc:"Campari, xarope, água tônica, suco de limão",foto:""},
+    {name:"Munique",price:28.90,desc:"Tequila, xarope, suco de limão e laranja",foto:""},
     {name:"Atlanta (Long Island)",price:29.90,desc:"Gin, tequila, rum, vodka, limão, coca-cola",foto:""},
     {name:"Berlim (Old Fashioned)",price:29.90,desc:"Bourbon, xarope de açúcar, angostura",foto:""},
     {name:"Moscou (Moscow Mule)",price:32.90,desc:"Vodka importada, gengibre, gás, limão",foto:""},
@@ -149,6 +215,7 @@ const MENU = {
     {name:"H2OH",price:9.50,desc:"Consultar sabores",foto:""},
     {name:"Soda Italiana",price:16.90,desc:"Consultar sabores",foto:""},
     {name:"Suco",price:9.50,desc:"Consultar sabores",foto:""},
+    {name:"Schweppes",price:7.50,desc:"Consultar sabores",foto:""},
   ],
   "Destilados": [
     {name:"Vodka Smirnoff",price:14.90,desc:"Nacional",foto:""},
@@ -169,7 +236,10 @@ const MENU = {
 };
 
 let activecat = Object.keys(MENU)[0];
+// cart[key] = { name, price, qty, combo: false, drink: '' }
 let cart = {};
+
+function hasCombo(cat) { return COMBO_CATS.includes(cat); }
 
 function renderCats() {
   document.getElementById('cats').innerHTML = Object.keys(MENU).map(c =>
@@ -182,13 +252,41 @@ function selectCat(c) { activecat = c; renderCats(); renderItems(); }
 function renderItems() {
   const items = MENU[activecat] || [];
   const emoji = EMOJI_CAT[activecat] || '🍽️';
+  const showCombo = hasCombo(activecat);
+
   document.getElementById('items').innerHTML = items.map((item, i) => {
     const key = activecat+'|'+i;
-    const qty = cart[key]?.qty || 0;
+    const entry = cart[key] || {qty:0, combo:false, drink:''};
+    const qty = entry.qty;
+
     const imgHtml = item.foto
       ? `<div class="item-img"><img src="${item.foto}" alt="${item.name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=\\'emoji-placeholder\\'>${emoji}</div>'"></div>`
       : `<div class="emoji-placeholder">${emoji}</div>`;
-    return `<div class="item-card">
+
+    const comboDrinkSelect = entry.combo ? `
+      <select class="combo-drink-select" onchange="setDrink('${activecat}',${i},this.value)">
+        <option value="" ${!entry.drink?'selected':''}>Escolha a bebida...</option>
+        ${COMBO_DRINKS.map(d=>`<option value="${d}" ${entry.drink===d?'selected':''}>${d}</option>`).join('')}
+      </select>` : '';
+
+    const comboSection = showCombo && qty > 0 ? `
+      <div class="combo-section">
+        <label class="combo-toggle">
+          <input type="checkbox" ${entry.combo?'checked':''} onchange="toggleCombo('${activecat}',${i},this.checked)">
+          <div class="combo-check-box">
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="combo-label">
+            <strong>+ Combo R$10,90</strong>
+            <span>Batata 100g + bebida à sua escolha</span>
+          </div>
+        </label>
+        ${comboDrinkSelect}
+      </div>` : '';
+
+    return `<div class="item-card${entry.combo?' has-combo-open':''}">
       ${imgHtml}
       <div class="item-body">
         <div class="item-name">${item.name}</div>
@@ -200,6 +298,7 @@ function renderItems() {
             <button class="qty-btn" onclick="changeQty('${activecat}',${i},1)">+</button>
           </div>
         </div>
+        ${comboSection}
       </div>
     </div>`;
   }).join('');
@@ -208,14 +307,31 @@ function renderItems() {
 function changeQty(cat, i, delta) {
   const key = cat+'|'+i;
   const item = MENU[cat][i];
-  if (!cart[key]) cart[key] = {name:item.name,price:item.price,qty:0};
+  if (!cart[key]) cart[key] = {name:item.name, price:item.price, qty:0, combo:false, drink:''};
   cart[key].qty = Math.max(0, cart[key].qty + delta);
+  // se zerar, limpa combo
+  if (cart[key].qty === 0) { cart[key].combo = false; cart[key].drink = ''; }
   updateCart(); renderItems();
+}
+
+function toggleCombo(cat, i, checked) {
+  const key = cat+'|'+i;
+  if (!cart[key]) return;
+  cart[key].combo = checked;
+  if (!checked) cart[key].drink = '';
+  updateCart(); renderItems();
+}
+
+function setDrink(cat, i, drink) {
+  const key = cat+'|'+i;
+  if (!cart[key]) return;
+  cart[key].drink = drink;
+  updateCart();
 }
 
 function updateCart() {
   const items = Object.values(cart).filter(i=>i.qty>0);
-  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
+  const total = items.reduce((s,i) => s + i.price*i.qty + (i.combo ? COMBO_PRICE*i.qty : 0), 0);
   const count = items.reduce((s,i)=>s+i.qty,0);
   document.getElementById('cart-info').textContent = count===0?'Nenhum item selecionado':`${count} item${count>1?'s':''} no pedido`;
   document.getElementById('cart-total').textContent = count===0?'':`Total: R$ ${total.toFixed(2).replace('.',',')}`;
@@ -224,11 +340,28 @@ function updateCart() {
 
 function finalizarPedido() {
   const items = Object.values(cart).filter(i=>i.qty>0);
-  const total = items.reduce((s,i)=>s+i.price*i.qty,0);
-  let msg = 'Olá! Gostaria de fazer um pedido:%0A%0A';
-  items.forEach(i=>{msg+=`• ${i.qty}x ${i.name} — R$ ${(i.price*i.qty).toFixed(2).replace('.',',')}%0A`;});
-  msg+=`%0ATotal: R$ ${total.toFixed(2).replace('.',',')}`;
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`,'_blank');
+
+  // Valida combos sem bebida escolhida
+  const comboSemBebida = items.filter(i => i.combo && !i.drink);
+  if (comboSemBebida.length > 0) {
+    alert('Por favor, escolha a bebida do combo antes de continuar.');
+    return;
+  }
+
+  const total = items.reduce((s,i) => s + i.price*i.qty + (i.combo ? COMBO_PRICE*i.qty : 0), 0);
+
+  let linhas = [];
+  items.forEach(i => {
+    linhas.push(`• ${i.qty}x ${i.name} — R$ ${(i.price*i.qty).toFixed(2).replace('.',',')}`);
+    if (i.combo) {
+      linhas.push(`  ↳ Combo (batata 100g + ${i.drink}) — R$ ${(COMBO_PRICE*i.qty).toFixed(2).replace('.',',')}`);
+    }
+  });
+  linhas.push('');
+  linhas.push(`Total: R$ ${total.toFixed(2).replace('.',',')}`);
+
+  const msg = encodeURIComponent('Olá! Gostaria de fazer um pedido:\n\n' + linhas.join('\n'));
+  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank');
 }
 
 renderCats(); renderItems();
