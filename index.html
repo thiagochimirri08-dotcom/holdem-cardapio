@@ -7,105 +7,186 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green: #1D9E75;
-  --green-dark: #157a5a;
-  --green-light: rgba(29,158,117,0.12);
-  --bg: #0f0f0f;
-  --surface: #1a1a1a;
-  --surface2: #242424;
-  --border: #2e2e2e;
+  --amber: #F5C842;
+  --amber-dark: #c9a030;
+  --amber-glow: rgba(245,200,66,0.12);
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --surface2: #202020;
+  --border: #2a2a2a;
+  --border-amber: rgba(245,200,66,0.3);
   --text: #f0f0f0;
-  --text-muted: #888;
-  --radius: 12px;
+  --text-muted: #777;
+  --radius: 10px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 16px 10px; text-align: center; position: sticky; top: 0; z-index: 100; }
-header .logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-header .logo-script { font-family: 'Dancing Script', cursive; font-weight: 700; font-size: 38px; color: #fff; line-height: 1; letter-spacing: 1px; }
-header .logo-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 5px; text-transform: uppercase; margin-top: 2px; }
+/* HEADER */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 16px 12px;
+  text-align: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-corners { position: relative; display: inline-block; padding: 0 24px; }
+.header-corners::before,
+.header-corners::after {
+  content: '';
+  position: absolute;
+  width: 12px; height: 12px;
+  border-color: var(--amber);
+  border-style: solid;
+  opacity: 0.5;
+}
+.header-corners::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+.header-corners::after  { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+.logo-script { font-family: 'Dancing Script', cursive; font-weight: 700; font-size: 40px; color: #fff; line-height: 1.1; letter-spacing: 1px; }
+.logo-divider { display: flex; align-items: center; justify-content: center; gap: 8px; margin: 2px 0; }
+.logo-divider-line { width: 32px; height: 1px; background: var(--amber); opacity: 0.5; }
+.logo-divider-dot  { width: 4px; height: 4px; border-radius: 50%; background: var(--amber); }
+.logo-sub { font-family: 'Bebas Neue', sans-serif; font-size: 11px; color: var(--amber); letter-spacing: 6px; opacity: 0.8; }
 
-.cats-wrap { overflow-x: auto; padding: 14px 16px; background: var(--surface); border-bottom: 1px solid var(--border); scrollbar-width: none; }
+/* CATEGORIES */
+.cats-wrap { overflow-x: auto; padding: 12px 16px; background: var(--surface); border-bottom: 1px solid var(--border); scrollbar-width: none; }
 .cats-wrap::-webkit-scrollbar { display: none; }
 .cats { display: flex; gap: 8px; width: max-content; }
-.cat-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border); font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; background: var(--surface2); color: var(--text-muted); white-space: nowrap; transition: all 0.15s; }
-.cat-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+.cat-btn {
+  padding: 6px 16px; border-radius: 4px;
+  border: 1px solid var(--border);
+  font-size: 12px; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1.5px;
+  cursor: pointer; background: var(--surface2); color: var(--text-muted);
+  white-space: nowrap; transition: all 0.15s;
+}
+.cat-btn.active { background: var(--amber); color: #111; border-color: var(--amber); }
+.cat-btn:hover:not(.active) { border-color: var(--border-amber); color: var(--amber); }
 
-.items { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding-bottom: 110px; }
+/* GRID */
+.items { padding: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(158px, 1fr)); gap: 10px; padding-bottom: 110px; }
 
-.item-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.15s; }
-.item-card:hover { border-color: var(--green); }
-.item-card.has-combo-open { border-color: var(--green); }
+/* CARD */
+.item-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: border-color 0.15s;
+  position: relative;
+}
+.item-card:hover { border-color: var(--border-amber); }
+.item-card.active-card { border-color: var(--amber); }
 
-.emoji-placeholder { font-size: 36px; width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: var(--surface2); }
+/* corner accents on active card */
+.item-card.active-card::before,
+.item-card.active-card::after {
+  content: '';
+  position: absolute;
+  width: 8px; height: 8px;
+  border-color: var(--amber);
+  border-style: solid;
+  z-index: 2;
+}
+.item-card.active-card::before { top: 4px; left: 4px; border-width: 1.5px 0 0 1.5px; }
+.item-card.active-card::after  { bottom: 4px; right: 4px; border-width: 0 1.5px 1.5px 0; }
+
+.emoji-placeholder { font-size: 34px; width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; background: var(--surface2); }
 .item-img { width: 100%; aspect-ratio: 4/3; overflow: hidden; }
 .item-img img { width: 100%; height: 100%; object-fit: cover; }
 
-.item-body { padding: 10px 12px 12px; flex: 1; display: flex; flex-direction: column; }
-.item-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
-.item-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 10px; }
+.item-body { padding: 10px 11px 11px; flex: 1; display: flex; flex-direction: column; }
+.item-name { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; line-height: 1.3; }
+.item-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; flex: 1; margin-bottom: 8px; }
 .item-footer { display: flex; align-items: center; justify-content: space-between; }
-.item-price { font-size: 15px; font-weight: 600; color: var(--green); }
+.item-price { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: var(--amber); letter-spacing: 0.5px; }
 
-.qty-control { display: flex; align-items: center; gap: 6px; }
-.qty-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface2); cursor: pointer; color: var(--green); font-size: 16px; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.1s; }
-.qty-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
-.qty-num { font-size: 13px; font-weight: 600; color: var(--text); min-width: 14px; text-align: center; }
+.qty-control { display: flex; align-items: center; gap: 5px; }
+.qty-btn {
+  width: 26px; height: 26px; border-radius: 3px;
+  border: 1px solid var(--border);
+  background: var(--surface2); cursor: pointer;
+  color: var(--amber); font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1; transition: all 0.1s;
+}
+.qty-btn:hover { background: var(--amber); color: #111; border-color: var(--amber); }
+.qty-num { font-family: 'Bebas Neue', sans-serif; font-size: 16px; color: var(--text); min-width: 14px; text-align: center; }
 
-/* COMBO SECTION */
-.combo-section { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 10px; }
+/* INSTANCES */
+.instances { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.instance-block {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 10px;
+}
+.instance-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+}
+.instance-label { font-size: 11px; color: var(--text-muted); letter-spacing: 0.5px; }
+.instance-remove { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 14px; line-height: 1; padding: 0; transition: color 0.1s; }
+.instance-remove:hover { color: #e05a5a; }
+
+/* COMBO TOGGLE */
 .combo-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
 .combo-toggle input[type="checkbox"] { display: none; }
 .combo-check-box {
-  width: 18px; height: 18px; border-radius: 5px; border: 1.5px solid var(--border);
-  background: var(--surface2); flex-shrink: 0; display: flex; align-items: center;
-  justify-content: center; transition: all 0.15s;
+  width: 16px; height: 16px; border-radius: 3px;
+  border: 1.5px solid var(--border);
+  background: var(--surface); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
 }
 .combo-check-box svg { display: none; }
-.combo-toggle input:checked ~ .combo-check-box {
-  background: var(--green); border-color: var(--green);
-}
+.combo-toggle input:checked ~ .combo-check-box { background: var(--amber); border-color: var(--amber); }
 .combo-toggle input:checked ~ .combo-check-box svg { display: block; }
-.combo-label { font-size: 12px; color: var(--text-muted); line-height: 1.3; flex: 1; }
-.combo-label strong { color: var(--green); font-size: 12px; }
-.combo-label span { display: block; font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+.combo-label { font-size: 11px; color: var(--text-muted); line-height: 1.3; flex: 1; }
+.combo-label strong { color: var(--amber); }
+.combo-label span { display: block; font-size: 10px; margin-top: 1px; }
 
 .combo-drink-select {
-  margin-top: 8px;
-  width: 100%;
-  background: var(--surface2);
-  border: 1px solid var(--green);
-  border-radius: 8px;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  padding: 7px 10px;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231D9E75' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  padding-right: 28px;
+  margin-top: 7px; width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--amber);
+  border-radius: 6px;
+  color: var(--text); font-family: 'Inter', sans-serif; font-size: 11px;
+  padding: 6px 28px 6px 9px; outline: none; cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23F5C842' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center;
 }
-.combo-drink-select:focus { border-color: var(--green-dark); }
 
 /* CART BAR */
-.cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 200; }
-.cart-info { font-size: 13px; color: var(--text-muted); }
-.cart-total { font-size: 16px; font-weight: 600; color: var(--text); margin-top: 2px; }
-.cart-btn { background: var(--green); color: #fff; border: none; border-radius: 10px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; white-space: nowrap; }
-.cart-btn:hover { background: var(--green-dark); }
+.cart-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface); border-top: 1px solid var(--border-amber);
+  padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; z-index: 200;
+}
+.cart-info { font-size: 12px; color: var(--text-muted); }
+.cart-total { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--amber); letter-spacing: 1px; margin-top: 1px; }
+.cart-btn {
+  background: var(--amber); color: #111;
+  border: none; border-radius: 6px;
+  padding: 10px 18px; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px; transition: background 0.15s; white-space: nowrap;
+}
+.cart-btn:hover { background: var(--amber-dark); }
 .cart-btn:disabled { background: var(--surface2); color: var(--text-muted); cursor: default; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-wrap">
+  <div class="header-corners">
     <div class="logo-script">Hold'em</div>
-    <div class="logo-sub">Sports Bar · Cardápio</div>
+    <div class="logo-divider">
+      <div class="logo-divider-line"></div>
+      <div class="logo-divider-dot"></div>
+      <div class="logo-divider-line"></div>
+    </div>
+    <div class="logo-sub">Sports Bar &nbsp;·&nbsp; Cardápio</div>
   </div>
 </header>
 
@@ -120,24 +201,14 @@ header .logo-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 5p
     <div class="cart-info" id="cart-info">Nenhum item selecionado</div>
     <div class="cart-total" id="cart-total"></div>
   </div>
-  <button class="cart-btn" id="cart-btn" disabled onclick="finalizarPedido()">🛒 Pedir no WhatsApp</button>
+  <button class="cart-btn" id="cart-btn" disabled onclick="finalizarPedido()">🛒 PEDIR NO WHATSAPP</button>
 </div>
 
 <script>
 const WHATSAPP = '5516994605273';
-
 const COMBO_PRICE = 10.90;
 const COMBO_CATS = ['Hambúrgueres', 'Lanches'];
-const COMBO_DRINKS = [
-  'Refrigerante',
-  'Água sem gás',
-  'Água com gás',
-  'H2OH',
-  'Schweppes',
-  'Suco',
-  'Soda Italiana',
-  'Energético Red Bull',
-];
+const COMBO_DRINKS = ['Refrigerante','Água sem gás','Água com gás','H2OH','Schweppes','Suco','Soda Italiana','Energético Red Bull'];
 
 const EMOJI_CAT = {
   'Hambúrgueres':'🍔','Lanches':'🥪','Porções':'🍟',
@@ -147,96 +218,96 @@ const EMOJI_CAT = {
 
 const MENU = {
   "Hambúrgueres": [
-    {name:"San Siro",price:43.90,desc:"Brioche, 180g, queijo, cebola empanada, bacon, geleia BBQ, sour cream",foto:""},
-    {name:"Maracanã",price:38.90,desc:"Brioche, 180g, queijo, maionese da casa, alface, tomate, bacon",foto:""},
-    {name:"Morumbi",price:37.90,desc:"Brioche, 180g, queijo, picles, cebola picada, mostarda, ketchup",foto:""},
-    {name:"Camp Nou",price:41.90,desc:"Brioche, 180g, queijo, cebola caramelizada, catupiry, bacon",foto:""},
-    {name:"Bernabeu",price:39.90,desc:"Brioche, 180g, queijo, alho frito, catupiry, bacon",foto:""},
-    {name:"Azteca",price:39.90,desc:"Brioche, 180g, duplo cheddar, bacon, maionese",foto:""},
-    {name:"Monumental",price:43.90,desc:"Brioche, 180g, queijo empanado, geleia de pimenta, tomate sweet grape, sour cream",foto:""},
-    {name:"El Madrigal",price:42.90,desc:"Brioche, 180g, abacaxi empanado, muçarela, mini vinagrete, maionese, sour cream",foto:""},
+    {name:"San Siro",price:43.90,desc:"Brioche, 180g, queijo, cebola empanada, bacon, geleia BBQ, sour cream"},
+    {name:"Maracanã",price:38.90,desc:"Brioche, 180g, queijo, maionese da casa, alface, tomate, bacon"},
+    {name:"Morumbi",price:37.90,desc:"Brioche, 180g, queijo, picles, cebola picada, mostarda, ketchup"},
+    {name:"Camp Nou",price:41.90,desc:"Brioche, 180g, queijo, cebola caramelizada, catupiry, bacon"},
+    {name:"Bernabeu",price:39.90,desc:"Brioche, 180g, queijo, alho frito, catupiry, bacon"},
+    {name:"Azteca",price:39.90,desc:"Brioche, 180g, duplo cheddar, bacon, maionese"},
+    {name:"Monumental",price:43.90,desc:"Brioche, 180g, queijo empanado, geleia de pimenta, tomate sweet grape, sour cream"},
+    {name:"El Madrigal",price:42.90,desc:"Brioche, 180g, abacaxi empanado, muçarela, mini vinagrete, maionese, sour cream"},
   ],
   "Lanches": [
-    {name:"Premier",price:43.90,desc:"Brioche, iscas de tilápia, molho tártaro, coleslaw",foto:""},
-    {name:"Romano",price:36.90,desc:"Ciabatta, salame, muçarela, alface, cebola roxa, tomate, sour cream",foto:""},
-    {name:"Centenário",price:48.90,desc:"Francês, picanha em tiras, muçarela, tomate, cebola, maionese de alho",foto:""},
-    {name:"Beira-Rio",price:49.90,desc:"Brioche, filé mignon, catupiry, maionese branca, tomate sweet grape",foto:""},
-    {name:"Pacaembu",price:37.90,desc:"Francês, hambúrguer de linguiça, muçarela, cebola, maionese de alho",foto:""},
-    {name:"Mineirão",price:39.90,desc:"Brioche, filé de frango empanado, maionese branca, alface",foto:""},
-    {name:"Noroeste",price:47.90,desc:"Francês, contra-filé, muçarela, alface, tomate, cebola, maionese da casa",foto:""},
-    {name:"São Carlense",price:54.90,desc:"Francês, filé mignon, muçarela, tomate, maionese da casa",foto:""},
-    {name:"Ferroviária",price:54.90,desc:"Francês, picanha ao alho frito, muçarela, tomate, maionese da casa",foto:""},
+    {name:"Premier",price:43.90,desc:"Brioche, iscas de tilápia, molho tártaro, coleslaw"},
+    {name:"Romano",price:36.90,desc:"Ciabatta, salame, muçarela, alface, cebola roxa, tomate, sour cream"},
+    {name:"Centenário",price:48.90,desc:"Francês, picanha em tiras, muçarela, tomate, cebola, maionese de alho"},
+    {name:"Beira-Rio",price:49.90,desc:"Brioche, filé mignon, catupiry, maionese branca, tomate sweet grape"},
+    {name:"Pacaembu",price:37.90,desc:"Francês, hambúrguer de linguiça, muçarela, cebola, maionese de alho"},
+    {name:"Mineirão",price:39.90,desc:"Brioche, filé de frango empanado, maionese branca, alface"},
+    {name:"Noroeste",price:47.90,desc:"Francês, contra-filé, muçarela, alface, tomate, cebola, maionese da casa"},
+    {name:"São Carlense",price:54.90,desc:"Francês, filé mignon, muçarela, tomate, maionese da casa"},
+    {name:"Ferroviária",price:54.90,desc:"Francês, picanha ao alho frito, muçarela, tomate, maionese da casa"},
   ],
   "Porções": [
-    {name:"Tábua de Frios",price:54.90,desc:"Muçarela, parmesão, salame, coppa, picles, azeitona",foto:""},
-    {name:"Batata Flax Flu (inteira)",price:34.90,desc:"Batata palito com páprica picante",foto:""},
-    {name:"Batata Flax Flu (meia)",price:23.90,desc:"Batata palito com páprica picante",foto:""},
-    {name:"Batata Palestra (inteira)",price:39.90,desc:"Batata palito, cheddar e bacon",foto:""},
-    {name:"La Bombonera (inteira)",price:48.90,desc:"Batata, cheddar, bacon, ovos com gema mole",foto:""},
-    {name:"Olympic Rings (inteiro)",price:39.90,desc:"Anéis de cebola empanados artesanais",foto:""},
-    {name:"Libertadores (inteira)",price:45.90,desc:"Mandioca frita com pulled pork e sour cream",foto:""},
-    {name:"Oliver Kahn (inteira)",price:49.90,desc:"Iscas de frango panko com molho tártaro",foto:""},
-    {name:"Champions League (inteiro)",price:129.90,desc:"Costelinha defumada ao BBQ com fritas",foto:""},
-    {name:"Mundial (inteira)",price:99.90,desc:"Filé mignon com catupiry, batata frita",foto:""},
-    {name:"Brasileirão (inteira)",price:93.90,desc:"Picanhas na chapa, torradas, mandioca e molho",foto:""},
-    {name:"Sticks de Queijo",price:29.90,desc:"Palitinhos de muçarela empanados, geleia de pimenta",foto:""},
-    {name:"Dadinhos de Tapioca",price:29.90,desc:"Artesanais com goiabada e geleia de pimenta",foto:""},
-    {name:"Chips",price:15.90,desc:"Crocantes chips de batata doce",foto:""},
-    {name:"Amendoim",price:9.90,desc:"Consulte sabores disponíveis",foto:""},
+    {name:"Tábua de Frios",price:54.90,desc:"Muçarela, parmesão, salame, coppa, picles, azeitona"},
+    {name:"Batata Flax Flu (inteira)",price:34.90,desc:"Batata palito com páprica picante"},
+    {name:"Batata Flax Flu (meia)",price:23.90,desc:"Batata palito com páprica picante"},
+    {name:"Batata Palestra (inteira)",price:39.90,desc:"Batata palito, cheddar e bacon"},
+    {name:"La Bombonera (inteira)",price:48.90,desc:"Batata, cheddar, bacon, ovos com gema mole"},
+    {name:"Olympic Rings (inteiro)",price:39.90,desc:"Anéis de cebola empanados artesanais"},
+    {name:"Libertadores (inteira)",price:45.90,desc:"Mandioca frita com pulled pork e sour cream"},
+    {name:"Oliver Kahn (inteira)",price:49.90,desc:"Iscas de frango panko com molho tártaro"},
+    {name:"Champions League (inteiro)",price:129.90,desc:"Costelinha defumada ao BBQ com fritas"},
+    {name:"Mundial (inteira)",price:99.90,desc:"Filé mignon com catupiry, batata frita"},
+    {name:"Brasileirão (inteira)",price:93.90,desc:"Picanhas na chapa, torradas, mandioca e molho"},
+    {name:"Sticks de Queijo",price:29.90,desc:"Palitinhos de muçarela empanados, geleia de pimenta"},
+    {name:"Dadinhos de Tapioca",price:29.90,desc:"Artesanais com goiabada e geleia de pimenta"},
+    {name:"Chips",price:15.90,desc:"Crocantes chips de batata doce"},
+    {name:"Amendoim",price:9.90,desc:"Consulte sabores disponíveis"},
   ],
   "Drinks": [
-    {name:"Rio de Janeiro",price:24.90,desc:"Caipirinha clássica — cachaça, vodka ou saquê",foto:""},
-    {name:"Barcelona",price:29.90,desc:"Vinho tinto, suco de abacaxi, leite condensado",foto:""},
-    {name:"Atenas (Piña Colada)",price:28.90,desc:"Rum, abacaxi, leite condensado, leite de coco",foto:""},
-    {name:"Havana (Mojito)",price:27.90,desc:"Rum, suco de limão, água com gás, xarope",foto:""},
-    {name:"Pequim (Negroni)",price:28.90,desc:"Campari, gin e vermute doce",foto:""},
-    {name:"Los Angeles (Campari Tônica)",price:27.90,desc:"Campari, xarope, água tônica, suco de limão",foto:""},
-    {name:"Munique",price:28.90,desc:"Tequila, xarope, suco de limão e laranja",foto:""},
-    {name:"Atlanta (Long Island)",price:29.90,desc:"Gin, tequila, rum, vodka, limão, coca-cola",foto:""},
-    {name:"Berlim (Old Fashioned)",price:29.90,desc:"Bourbon, xarope de açúcar, angostura",foto:""},
-    {name:"Moscou (Moscow Mule)",price:32.90,desc:"Vodka importada, gengibre, gás, limão",foto:""},
-    {name:"Tóquio (Gin Tônica)",price:29.90,desc:"Gin, limão, xarope, pimenta rosa, alecrim",foto:""},
-    {name:"Paris (Fitzgerald)",price:32.90,desc:"Gin, xarope, limão, angostura",foto:""},
-    {name:"Veneza (Aperol Citrus)",price:29.90,desc:"Aperol, Licor 43, laranja e limão",foto:""},
-    {name:"Tijuana (Margarita)",price:29.90,desc:"Licor de frutas, tequila, suco de limão e sal",foto:""},
+    {name:"Rio de Janeiro",price:24.90,desc:"Caipirinha clássica — cachaça, vodka ou saquê"},
+    {name:"Barcelona",price:29.90,desc:"Vinho tinto, suco de abacaxi, leite condensado"},
+    {name:"Atenas (Piña Colada)",price:28.90,desc:"Rum, abacaxi, leite condensado, leite de coco"},
+    {name:"Havana (Mojito)",price:27.90,desc:"Rum, suco de limão, água com gás, xarope"},
+    {name:"Pequim (Negroni)",price:28.90,desc:"Campari, gin e vermute doce"},
+    {name:"Los Angeles (Campari Tônica)",price:27.90,desc:"Campari, xarope, água tônica, suco de limão"},
+    {name:"Munique",price:28.90,desc:"Tequila, xarope, suco de limão e laranja"},
+    {name:"Atlanta (Long Island)",price:29.90,desc:"Gin, tequila, rum, vodka, limão, coca-cola"},
+    {name:"Berlim (Old Fashioned)",price:29.90,desc:"Bourbon, xarope de açúcar, angostura"},
+    {name:"Moscou (Moscow Mule)",price:32.90,desc:"Vodka importada, gengibre, gás, limão"},
+    {name:"Tóquio (Gin Tônica)",price:29.90,desc:"Gin, limão, xarope, pimenta rosa, alecrim"},
+    {name:"Paris (Fitzgerald)",price:32.90,desc:"Gin, xarope, limão, angostura"},
+    {name:"Veneza (Aperol Citrus)",price:29.90,desc:"Aperol, Licor 43, laranja e limão"},
+    {name:"Tijuana (Margarita)",price:29.90,desc:"Licor de frutas, tequila, suco de limão e sal"},
   ],
   "Cervejas": [
-    {name:"Litrão",price:15.90,desc:"Amstel, Brahma, Skol ou Antarctica",foto:""},
-    {name:"Original 600ml",price:18.00,desc:"",foto:""},
-    {name:"Heineken 600ml",price:20.00,desc:"",foto:""},
-    {name:"Long Neck Heineken",price:12.00,desc:"Heineken ou Heineken 0.0",foto:""},
-    {name:"Long Neck Nacional",price:10.00,desc:"Amstel Ultra",foto:""},
+    {name:"Litrão",price:15.90,desc:"Amstel, Brahma, Skol ou Antarctica"},
+    {name:"Original 600ml",price:18.00,desc:""},
+    {name:"Heineken 600ml",price:20.00,desc:""},
+    {name:"Long Neck Heineken",price:12.00,desc:"Heineken ou Heineken 0.0"},
+    {name:"Long Neck Nacional",price:10.00,desc:"Amstel Ultra"},
   ],
   "Bebidas": [
-    {name:"Refrigerante",price:7.00,desc:"Coca, Guaraná, Fanta, Sprite, Itubaina",foto:""},
-    {name:"Água sem gás",price:4.00,desc:"",foto:""},
-    {name:"Água com gás",price:5.00,desc:"",foto:""},
-    {name:"Energético Red Bull",price:13.00,desc:"",foto:""},
-    {name:"H2OH",price:9.50,desc:"Consultar sabores",foto:""},
-    {name:"Soda Italiana",price:16.90,desc:"Consultar sabores",foto:""},
-    {name:"Suco",price:9.50,desc:"Consultar sabores",foto:""},
-    {name:"Schweppes",price:7.50,desc:"Consultar sabores",foto:""},
+    {name:"Refrigerante",price:7.00,desc:"Coca, Guaraná, Fanta, Sprite, Itubaina"},
+    {name:"Água sem gás",price:4.00,desc:""},
+    {name:"Água com gás",price:5.00,desc:""},
+    {name:"Energético Red Bull",price:13.00,desc:""},
+    {name:"H2OH",price:9.50,desc:"Consultar sabores"},
+    {name:"Soda Italiana",price:16.90,desc:"Consultar sabores"},
+    {name:"Suco",price:9.50,desc:"Consultar sabores"},
+    {name:"Schweppes",price:7.50,desc:"Consultar sabores"},
   ],
   "Destilados": [
-    {name:"Vodka Smirnoff",price:14.90,desc:"Nacional",foto:""},
-    {name:"Vodka Absolut",price:21.90,desc:"Importada",foto:""},
-    {name:"Whisky Red Label",price:21.90,desc:"",foto:""},
-    {name:"Whisky Black Label",price:25.90,desc:"",foto:""},
-    {name:"Whisky Jack Daniels",price:29.90,desc:"",foto:""},
-    {name:"Cachaça 51",price:6.90,desc:"",foto:""},
-    {name:"Cachaça Salinas",price:10.90,desc:"",foto:""},
-    {name:"Campari",price:14.90,desc:"",foto:""},
-    {name:"Tequila",price:21.90,desc:"",foto:""},
-    {name:"Licor 43",price:26.90,desc:"",foto:""},
+    {name:"Vodka Smirnoff",price:14.90,desc:"Nacional"},
+    {name:"Vodka Absolut",price:21.90,desc:"Importada"},
+    {name:"Whisky Red Label",price:21.90,desc:""},
+    {name:"Whisky Black Label",price:25.90,desc:""},
+    {name:"Whisky Jack Daniels",price:29.90,desc:""},
+    {name:"Cachaça 51",price:6.90,desc:""},
+    {name:"Cachaça Salinas",price:10.90,desc:""},
+    {name:"Campari",price:14.90,desc:""},
+    {name:"Tequila",price:21.90,desc:""},
+    {name:"Licor 43",price:26.90,desc:""},
   ],
   "Sobremesas": [
-    {name:"Petit Gateau Chocolate",price:24.90,desc:"",foto:""},
-    {name:"Taça de Sorvete com Cobertura",price:14.90,desc:"",foto:""},
+    {name:"Petit Gateau Chocolate",price:24.90,desc:""},
+    {name:"Taça de Sorvete com Cobertura",price:14.90,desc:""},
   ]
 };
 
 let activecat = Object.keys(MENU)[0];
-// cart[key] = { name, price, qty, combo: false, drink: '' }
+// cart[itemKey] = { name, price, instances: [{combo, drink}] }
 let cart = {};
 
 function hasCombo(cat) { return COMBO_CATS.includes(cat); }
@@ -256,37 +327,43 @@ function renderItems() {
 
   document.getElementById('items').innerHTML = items.map((item, i) => {
     const key = activecat+'|'+i;
-    const entry = cart[key] || {qty:0, combo:false, drink:''};
-    const qty = entry.qty;
+    const entry = cart[key];
+    const instances = entry ? entry.instances : [];
+    const qty = instances.length;
 
     const imgHtml = item.foto
       ? `<div class="item-img"><img src="${item.foto}" alt="${item.name}" loading="lazy" onerror="this.parentElement.outerHTML='<div class=\\'emoji-placeholder\\'>${emoji}</div>'"></div>`
       : `<div class="emoji-placeholder">${emoji}</div>`;
 
-    const comboDrinkSelect = entry.combo ? `
-      <select class="combo-drink-select" onchange="setDrink('${activecat}',${i},this.value)">
-        <option value="" ${!entry.drink?'selected':''}>Escolha a bebida...</option>
-        ${COMBO_DRINKS.map(d=>`<option value="${d}" ${entry.drink===d?'selected':''}>${d}</option>`).join('')}
-      </select>` : '';
-
-    const comboSection = showCombo && qty > 0 ? `
-      <div class="combo-section">
-        <label class="combo-toggle">
-          <input type="checkbox" ${entry.combo?'checked':''} onchange="toggleCombo('${activecat}',${i},this.checked)">
-          <div class="combo-check-box">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+    let instancesHtml = '';
+    if (showCombo && qty > 0) {
+      instancesHtml = `<div class="instances">` + instances.map((inst, idx) => `
+        <div class="instance-block">
+          <div class="instance-header">
+            <span class="instance-label">Unidade ${idx+1}</span>
+            <button class="instance-remove" onclick="removeInstance('${activecat}',${i},${idx})" title="Remover">✕</button>
           </div>
-          <div class="combo-label">
-            <strong>+ Combo R$10,90</strong>
-            <span>Batata 100g + bebida à sua escolha</span>
-          </div>
-        </label>
-        ${comboDrinkSelect}
-      </div>` : '';
+          <label class="combo-toggle">
+            <input type="checkbox" ${inst.combo?'checked':''} onchange="toggleCombo('${activecat}',${i},${idx},this.checked)">
+            <div class="combo-check-box">
+              <svg width="9" height="9" viewBox="0 0 12 12" fill="none">
+                <polyline points="2,6 5,9 10,3" stroke="#111" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="combo-label">
+              <strong>+ Combo R$10,90</strong>
+              <span>Batata 100g + bebida</span>
+            </div>
+          </label>
+          ${inst.combo ? `
+          <select class="combo-drink-select" onchange="setDrink('${activecat}',${i},${idx},this.value)">
+            <option value="" ${!inst.drink?'selected':''}>Escolha a bebida...</option>
+            ${COMBO_DRINKS.map(d=>`<option value="${d}" ${inst.drink===d?'selected':''}>${d}</option>`).join('')}
+          </select>` : ''}
+        </div>`).join('') + `</div>`;
+    }
 
-    return `<div class="item-card${entry.combo?' has-combo-open':''}">
+    return `<div class="item-card${qty>0?' active-card':''}">
       ${imgHtml}
       <div class="item-body">
         <div class="item-name">${item.name}</div>
@@ -294,69 +371,101 @@ function renderItems() {
         <div class="item-footer">
           <div class="item-price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
           <div class="qty-control">
-            ${qty>0?`<button class="qty-btn" onclick="changeQty('${activecat}',${i},-1)">−</button><span class="qty-num">${qty}</span>`:''}
-            <button class="qty-btn" onclick="changeQty('${activecat}',${i},1)">+</button>
+            ${qty>0?`<button class="qty-btn" onclick="removeUnit('${activecat}',${i})">−</button><span class="qty-num">${qty}</span>`:''}
+            <button class="qty-btn" onclick="addUnit('${activecat}',${i})">+</button>
           </div>
         </div>
-        ${comboSection}
+        ${instancesHtml}
       </div>
     </div>`;
   }).join('');
 }
 
-function changeQty(cat, i, delta) {
+function addUnit(cat, i) {
   const key = cat+'|'+i;
   const item = MENU[cat][i];
-  if (!cart[key]) cart[key] = {name:item.name, price:item.price, qty:0, combo:false, drink:''};
-  cart[key].qty = Math.max(0, cart[key].qty + delta);
-  // se zerar, limpa combo
-  if (cart[key].qty === 0) { cart[key].combo = false; cart[key].drink = ''; }
+  if (!cart[key]) cart[key] = {name:item.name, price:item.price, instances:[]};
+  cart[key].instances.push({combo:false, drink:''});
   updateCart(); renderItems();
 }
 
-function toggleCombo(cat, i, checked) {
+function removeUnit(cat, i) {
   const key = cat+'|'+i;
-  if (!cart[key]) return;
-  cart[key].combo = checked;
-  if (!checked) cart[key].drink = '';
+  if (!cart[key] || cart[key].instances.length === 0) return;
+  cart[key].instances.pop();
+  if (cart[key].instances.length === 0) delete cart[key];
   updateCart(); renderItems();
 }
 
-function setDrink(cat, i, drink) {
+function removeInstance(cat, i, idx) {
   const key = cat+'|'+i;
   if (!cart[key]) return;
-  cart[key].drink = drink;
+  cart[key].instances.splice(idx, 1);
+  if (cart[key].instances.length === 0) delete cart[key];
+  updateCart(); renderItems();
+}
+
+function toggleCombo(cat, i, idx, checked) {
+  const key = cat+'|'+i;
+  if (!cart[key]) return;
+  cart[key].instances[idx].combo = checked;
+  if (!checked) cart[key].instances[idx].drink = '';
+  updateCart(); renderItems();
+}
+
+function setDrink(cat, i, idx, drink) {
+  const key = cat+'|'+i;
+  if (!cart[key]) return;
+  cart[key].instances[idx].drink = drink;
   updateCart();
 }
 
 function updateCart() {
-  const items = Object.values(cart).filter(i=>i.qty>0);
-  const total = items.reduce((s,i) => s + i.price*i.qty + (i.combo ? COMBO_PRICE*i.qty : 0), 0);
-  const count = items.reduce((s,i)=>s+i.qty,0);
+  let total = 0, count = 0;
+  Object.values(cart).forEach(entry => {
+    entry.instances.forEach(inst => {
+      total += entry.price + (inst.combo ? COMBO_PRICE : 0);
+      count++;
+    });
+  });
   document.getElementById('cart-info').textContent = count===0?'Nenhum item selecionado':`${count} item${count>1?'s':''} no pedido`;
-  document.getElementById('cart-total').textContent = count===0?'':`Total: R$ ${total.toFixed(2).replace('.',',')}`;
+  document.getElementById('cart-total').textContent = count===0?'':`R$ ${total.toFixed(2).replace('.',',')}`;
   document.getElementById('cart-btn').disabled = count===0;
 }
 
 function finalizarPedido() {
-  const items = Object.values(cart).filter(i=>i.qty>0);
+  const entries = Object.values(cart).filter(e => e.instances.length > 0);
 
-  // Valida combos sem bebida escolhida
-  const comboSemBebida = items.filter(i => i.combo && !i.drink);
-  if (comboSemBebida.length > 0) {
+  const comboSemBebida = entries.some(e => e.instances.some(inst => inst.combo && !inst.drink));
+  if (comboSemBebida) {
     alert('Por favor, escolha a bebida do combo antes de continuar.');
     return;
   }
 
-  const total = items.reduce((s,i) => s + i.price*i.qty + (i.combo ? COMBO_PRICE*i.qty : 0), 0);
-
+  let total = 0;
   let linhas = [];
-  items.forEach(i => {
-    linhas.push(`• ${i.qty}x ${i.name} — R$ ${(i.price*i.qty).toFixed(2).replace('.',',')}`);
-    if (i.combo) {
-      linhas.push(`  ↳ Combo (batata 100g + ${i.drink}) — R$ ${(COMBO_PRICE*i.qty).toFixed(2).replace('.',',')}`);
+
+  entries.forEach(entry => {
+    const qty = entry.instances.length;
+    const subtotal = entry.price * qty;
+    const combos = entry.instances.filter(i => i.combo);
+
+    linhas.push(`• ${qty}x ${entry.name} — R$ ${subtotal.toFixed(2).replace('.',',')}`);
+    total += subtotal;
+
+    if (combos.length > 0) {
+      const comboTotal = combos.length * COMBO_PRICE;
+      total += comboTotal;
+      if (combos.length === qty && new Set(combos.map(c=>c.drink)).size === 1) {
+        linhas.push(`  ↳ ${combos.length}x Combo (batata 100g + ${combos[0].drink}) — R$ ${comboTotal.toFixed(2).replace('.',',')}`);
+      } else {
+        combos.forEach((c, idx) => {
+          linhas.push(`  ↳ Combo unidade ${idx+1} (batata 100g + ${c.drink}) — R$ ${COMBO_PRICE.toFixed(2).replace('.',',')}`);
+        });
+      }
     }
   });
+
   linhas.push('');
   linhas.push(`Total: R$ ${total.toFixed(2).replace('.',',')}`);
 
