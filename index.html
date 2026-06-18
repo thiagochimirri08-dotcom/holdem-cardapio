@@ -176,10 +176,16 @@ header { background: var(--surface); border-bottom: 1px solid var(--border); pad
     </div>
     <div class="section-title">Resumo do Pedido</div>
     <div class="order-summary" id="resumo-itens"></div>
-    <div class="section-title">Seu Nome</div>
+    <div class="section-title">Seus Dados</div>
     <div class="field-group">
+      <label class="field-label">Nome</label>
       <input class="field-input" id="campo-nome" type="text" placeholder="Como devemos te chamar?" maxlength="60">
       <div class="error-msg" id="err-nome">Por favor, informe seu nome.</div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">WhatsApp (com DDD)</label>
+      <input class="field-input" id="campo-telefone" type="tel" placeholder="Ex: 16991026908" maxlength="15">
+      <div class="error-msg" id="err-telefone">Por favor, informe seu WhatsApp.</div>
     </div>
     <div class="section-title">Tipo de Pedido</div>
     <div class="toggle-group" style="margin-bottom:14px">
@@ -694,7 +700,7 @@ function setPagamento(btn, tipo) {
   document.getElementById('err-pagamento').classList.remove('show');
 }
 
-function enviarPedido() {
+async function enviarPedido() {
   let valido = true;
   const nome = document.getElementById('campo-nome').value.trim();
   if (!nome) { document.getElementById('err-nome').classList.add('show'); valido=false; }
@@ -710,51 +716,101 @@ function enviarPedido() {
     if (bairroIndisponivel) { alert('Infelizmente não atendemos essa região ainda.'); return; }
   }
 
+  const telefone = document.getElementById('campo-telefone').value.trim().replace(/\D/g,'');
+  if (!telefone || telefone.length < 10) { document.getElementById('err-telefone').classList.add('show'); valido=false; }
+  else document.getElementById('err-telefone').classList.remove('show');
+
   if (!pagamento) { document.getElementById('err-pagamento').classList.add('show'); valido=false; }
   if (!valido) return;
 
   const entries = Object.values(cart).filter(e => e.instances.length > 0);
-  let linhas = ['Olá! Gostaria de fazer um pedido:',''];
   let subtotal = 0;
+  const itens = [];
 
   entries.forEach(entry => {
-    const qty = entry.instances.length;
-    const st = entry.price * qty;
-    subtotal += st;
-    linhas.push(`• ${qty}x ${entry.name} — R$ ${st.toFixed(2).replace('.',',')}`);
-    if (entry.isMSB) linhas.push(`  ↳ ${entry.detalhes}`);
-    entry.instances.forEach((inst, idx) => {
-      if (inst.veg) linhas.push(`  ↳ Un.${idx+1}: Substituir por hambúrguer vegetariano`);
-      if (inst.ponto && inst.ponto!=='N/A') linhas.push(`  ↳ Un.${idx+1}: Ponto ${inst.ponto}`);
-      if (inst.combo) {
-        subtotal += COMBO_PRICE;
-        linhas.push(`  ↳ Un.${idx+1}: Combo (batata 100g + ${inst.drink}) — R$ ${COMBO_PRICE.toFixed(2).replace('.',',')}`);
-      }
+    entry.instances.forEach(inst => {
+      subtotal += entry.price + (inst.combo ? COMBO_PRICE : 0);
+      itens.push({
+        nome: entry.name,
+        preco: entry.price,
+        ponto: inst.ponto || '',
+        veg: inst.veg || false,
+        combo: inst.combo || false,
+        bebida_combo: inst.drink || '',
+        detalhes: entry.isMSB ? entry.detalhes : ''
+      });
     });
   });
 
-  linhas.push('');
-  linhas.push(`Tipo: ${tipoEntrega==='entrega'?'Entrega':'Retirada no balcão'}`);
-  if (tipoEntrega==='entrega') {
-    const rua = document.getElementById('campo-rua').value.trim();
-    const bairro = document.getElementById('campo-bairro').value.trim();
-    const ref = document.getElementById('campo-ref').value.trim();
-    linhas.push(`Endereço: ${rua}, ${bairro}${ref?' — Ref: '+ref:''}`);
-    if (taxaEntrega>0) linhas.push(`Taxa de entrega: R$ ${taxaEntrega.toFixed(2).replace('.',',')}`);
-  }
-
+  const rua = tipoEntrega==='entrega' ? document.getElementById('campo-rua').value.trim() : '';
+  const bairro = tipoEntrega==='entrega' ? document.getElementById('campo-bairro').value.trim() : '';
+  const ref = tipoEntrega==='entrega' ? document.getElementById('campo-ref').value.trim() : '';
+  const troco = pagamento==='Dinheiro' ? document.getElementById('campo-troco').value.trim() : '';
   const total = subtotal + (tipoEntrega==='entrega' ? taxaEntrega : 0);
-  linhas.push(`Total: R$ ${total.toFixed(2).replace('.',',')}`);
-  linhas.push('');
-  linhas.push(`Pagamento: ${pagamento}`);
-  if (pagamento==='Dinheiro') {
-    const troco = document.getElementById('campo-troco').value.trim();
-    if (troco) linhas.push(`Troco para: ${troco}`);
-  }
-  linhas.push(`Nome: ${nome}`);
 
-  const msg = encodeURIComponent(linhas.join('\n'));
-  window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank');
+  const payload = {
+    nome,
+    telefone: '55' + telefone,
+    tipo: tipoEntrega,
+    endereco: rua,
+    bairro,
+    referencia: ref,
+    pagamento,
+    troco,
+    taxa_entrega: tipoEntrega==='entrega' ? taxaEntrega : 0,
+    subtotal: parseFloat(subtotal.toFixed(2)),
+    total: parseFloat(total.toFixed(2)),
+    itens
+  };
+
+  const btn = document.querySelector('.confirm-btn');
+  btn.textContent = 'ENVIANDO...';
+  btn.disabled = true;
+
+  try {
+    const resp = await fetch('https://ancientprawn-n8n.cloudfy.live/webhook/pedido-cardapio', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (resp.ok) {
+      fecharCheckout();
+      mostrarSucesso(nome, pagamento, total);
+      cart = {};
+      updateCart();
+    } else {
+      throw new Error('Erro');
+    }
+  } catch(e) {
+    alert('Erro ao enviar pedido. Tente novamente ou entre em contato pelo WhatsApp.');
+    btn.textContent = 'ENVIAR PEDIDO';
+    btn.disabled = false;
+  }
+}
+
+function mostrarSucesso(nome, pagamento, total) {
+  const isPix = pagamento === 'Pix';
+  document.getElementById('content-area').innerHTML = `
+    <div style="padding:40px 20px;text-align:center;max-width:400px;margin:0 auto">
+      <div style="font-size:60px;margin-bottom:16px">🍔</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--amber);letter-spacing:2px;margin-bottom:8px">PEDIDO RECEBIDO!</div>
+      <div style="font-size:14px;color:var(--text-muted);margin-bottom:24px">Olá ${nome}, seu pedido foi enviado com sucesso!</div>
+      ${isPix ? `
+      <div style="background:var(--surface);border:1px solid var(--border-amber);border-radius:12px;padding:20px;margin-bottom:24px;text-align:left">
+        <div style="font-size:12px;color:var(--amber);font-weight:600;letter-spacing:1px;margin-bottom:10px">PAGAMENTO VIA PIX</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:6px">Chave Pix:</div>
+        <div style="font-size:15px;color:var(--text);font-weight:600;margin-bottom:12px">pixholdem@gmail.com</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:6px">Valor:</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--amber)">R$ ${total.toFixed(2).replace('.',',')}</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:12px">📲 Envie o comprovante no WhatsApp para confirmar seu pedido</div>
+      </div>` : `
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:24px">
+        <div style="font-size:13px;color:var(--text-muted)">Estamos preparando tudo! Você receberá uma confirmação pelo WhatsApp em breve. 😊</div>
+      </div>`}
+      <button onclick="location.reload()" style="background:var(--amber);color:#111;border:none;border-radius:8px;padding:12px 28px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer">FAZER NOVO PEDIDO</button>
+    </div>`;
+  document.getElementById('cats').innerHTML = '';
+  document.querySelector('.cart-bar').style.display = 'none';
 }
 
 renderCats(); renderItems();
